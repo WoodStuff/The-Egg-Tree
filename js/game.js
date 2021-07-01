@@ -36,7 +36,7 @@ function getResetGain(layer, useType = null) {
 }
 
 function getNextAt(layer, canMax=false, useType = null) {
-	let type = useType
+	let type = useType;
 	if (!useType) {
 		type = tmp[layer].type
 		if (layers[layer].getNextAt !== undefined)

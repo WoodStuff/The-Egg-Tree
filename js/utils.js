@@ -277,11 +277,11 @@ function updateAchievements(layer) {
 }
 
 function addTime(diff, layer) {
-	let data = player
-	let time = data.timePlayed
+	let data = player;
+	let time = data.timePlayed;
 	if (layer) {
-		data = data[layer]
-		time = data.time
+		data = data[layer];
+		time = data.time;
 	}
 
 	//I am not that good to perfectly fix that leak. ~ DB Aarex
@@ -294,28 +294,27 @@ function addTime(diff, layer) {
 			if (!layer) player.timePlayedReset = true
 		}
 	}
-	time += toNumber(diff)
+	time += toNumber(diff);
 
-	if (layer) data.time = time
-	else data.timePlayed = time
+	if (layer) data.time = time;
+	else data.timePlayed = time;
 }
 
-shiftDown = false
-ctrlDown = false
+shiftDown = false;
+ctrlDown = false;
 
 document.onkeydown = function (e) {
 	if (player === undefined) return;
-	shiftDown = e.shiftKey
-	ctrlDown = e.ctrlKey
+	shiftDown = e.shiftKey;
+	ctrlDown = e.ctrlKey;
 	if (tmp.gameEnded && !player.keepGoing) return;
-	let key = e.key
-	if (ctrlDown) key = "ctrl+" + key
-	if (onFocused) return
-	if (ctrlDown && hotkeys[key]) e.preventDefault()
+	let key = e.key;
+	if (ctrlDown) key = "ctrl+" + key;
+	if (onFocused) return;
+	if (ctrlDown && hotkeys[key]) e.preventDefault();
 	if (hotkeys[key]) {
-		let k = hotkeys[key]
-		if (player[k.layer].unlocked && tmp[k.layer].hotkeys[k.id].unlocked)
-			k.onPress()
+		let k = hotkeys[key];
+		if (player[k.layer].unlocked && tmp[k.layer].hotkeys[k.id].unlocked) { k.onPress(); }
 	}
 }
 
