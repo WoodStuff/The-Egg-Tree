@@ -18,7 +18,9 @@ addLayer("e", {
 	baseResource: "points", // Name of resource prestige is based on
 	baseAmount() { return player.points }, // Get the current amount of baseResource
 	type: "normal", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-	exponent: 2/3,
+	exponent() { return 0.5 },
+	row: 0, // Row the layer is in on the tree (0 is the first row)
+	layerShown() { return true; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
 		return mult;
@@ -26,7 +28,6 @@ addLayer("e", {
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
 	},
-	row: 0, // Row the layer is in on the tree (0 is the first row)
 	hotkeys: [
 		{ key: "ctrl+s", description: "Ctrl+S: Save the game", onPress() {
             save(true);
@@ -35,5 +36,11 @@ addLayer("e", {
 			if (canReset(this.layer)) doReset(this.layer);
 		} },
 	],
-	layerShown() { return true; },
+	upgrades: {
+		11: {
+			name: "Start",
+    		description: "Get 1 point per second.",
+    		cost: new Decimal(10),
+		}
+    },
 });
