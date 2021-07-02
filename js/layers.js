@@ -33,8 +33,8 @@ addLayer('e', {
 	},
 	hotkeys: [
 		{ key: 'ctrl+s', description: 'Ctrl+S: Save the game', onPress() {
-            save(true);
-        } },
+			save(true);
+		} },
 		{ key: 'e', description: 'E: Reset for egg points', onPress() {
 			if (canReset(this.layer)) doReset(this.layer);
 		} },
@@ -42,13 +42,13 @@ addLayer('e', {
 	upgrades: {
 		11: {
 			title: 'Start',
-    		description: 'Get 1 point per second',
-    		cost: new Decimal(1),
+			description: 'Get 1 point per second',
+			cost: new Decimal(1),
 		},
 		12: {
 			title: 'Egg Power',
-    		description: 'Gain more points based on egg points',
-    		cost: new Decimal(2),
+			description: 'Gain more points based on egg points',
+			cost: new Decimal(2),
 			unlocked() {
 				return hasUpgrade('e', 11);
 			},
@@ -57,15 +57,23 @@ addLayer('e', {
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
-    },
+		13: {
+			title: 'Double Generators',
+			description: 'Get 2x more points per second',
+			cost: new Decimal(10),
+			unlocked() {
+				return hasUpgrade('e', 11);
+			},
+		},
+	},
 	achievements: {
 		11: {
 			name: 'Starting out',
 			tooltip: 'Get 10 egg points',
+			image: 'https://media.discordapp.net/attachments/478214127945383936/860595705672630282/starting_out_tet.png',
 			done() {
 				return player.e.points.gte(10);
 			},
-
 		},
 	}
 });

@@ -41,7 +41,8 @@ function getPointGen() {
 	if (!canGenPoints()) return new Decimal(0);
 
 	let gain = new Decimal(1);
-	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12))
+	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)) // Egg Power
+	if (hasUpgrade('e', 13)) gain = gain.times(2)                      // Double Generators
 
 	return gain;
 }
