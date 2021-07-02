@@ -38,7 +38,7 @@ addLayer("e", {
 	],
 	upgrades: {
 		11: {
-			name: "Start",
+			title: "Start",
     		description: "Get 1 point per second.",
     		cost: new Decimal(10),
 		}
