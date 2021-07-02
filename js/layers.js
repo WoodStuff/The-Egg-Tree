@@ -40,7 +40,7 @@ addLayer("e", {
 		11: {
 			title: "Start",
     		description: "Get 1 point per second.",
-    		cost: new Decimal(10),
+    		cost: new Decimal(1),
 		}
     },
 });
