@@ -13,7 +13,10 @@ addLayer("e", {
 		points: new Decimal(0),
 	} },
 	color: "#F2AD18",
-	requires: new Decimal(10), // Can be a function that takes requirement increases into account
+	requires() { // Can be a function that takes requirement increases into account // its now
+		cost = new Decimal(5);
+		return cost;
+	},
 	resource: "egg points", // Name of prestige currency
 	baseResource: "points", // Name of resource prestige is based on
 	baseAmount() { return player.points }, // Get the current amount of baseResource
@@ -39,8 +42,20 @@ addLayer("e", {
 	upgrades: {
 		11: {
 			title: "Start",
-    		description: "Get 1 point per second.",
+    		description: "Get 1 point per second",
     		cost: new Decimal(1),
-		}
+		},
+		12: {
+			title: "Egg Power",
+    		description: "Gain more points based on egg points",
+    		cost: new Decimal(2),
+			unlocked() {
+				return hasUpgrade('e', 11);
+			},
+			effect() {
+				return player[this.layer].points.add(1).pow(0.5);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + "x"; }, // Add formatting to the effect
+		},
     },
 });

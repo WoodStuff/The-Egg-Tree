@@ -7,7 +7,7 @@ let modInfo = {
 
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new Decimal (10), // Used for hard resets and new players
+	initialStartPoints: new Decimal(5), // Used for hard resets and new players
 	offlineLimit: 0,  // In hours
 };
 
@@ -38,11 +38,12 @@ function canGenPoints(){
 
 // Calculate points/sec!
 function getPointGen() {
-	if(!canGenPoints())
-		return new Decimal(0)
+	if (!canGenPoints()) return new Decimal(0);
 
-	let gain = new Decimal(1)
-	return gain
+	let gain = new Decimal(1);
+	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12))
+
+	return gain;
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
