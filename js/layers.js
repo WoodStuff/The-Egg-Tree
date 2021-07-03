@@ -39,7 +39,7 @@ addLayer('e', {
 		return new Decimal(1);
 	},
 	hotkeys: [
-		{ key: 'ctrl+s', description: 'Ctrl+S: Save the game', onPress() {
+		{ key: 'ctrl+s', description: 'Ctrl+S: Save the game', unlocked: true, onPress() {
 			save(true);
 		} },
 		{ key: 'e', description: 'E: Reset for egg points', onPress() {

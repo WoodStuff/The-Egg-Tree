@@ -4,7 +4,7 @@ let modInfo = {
 	author: "nirmoll",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
-	testMode: true,
+	testMode: false,
 
 	discordName: "",
 	discordLink: "",
