@@ -9,13 +9,18 @@ addLayer('e', {
 	symbol: 'E', // This appears on the layer's node. Default is the id with the first letter capitalized
 	position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
 	startData() { return {
-		unlocked: true,
+		unlocked: false,
 		points: new Decimal(0),
+		resets: new Decimal(0),
 	} },
 	color: '#F2AD18',
 	requires() { // Can be a function that takes requirement increases into account // its now
 		cost = new Decimal(5);
 		return cost;
+	},
+	onPrestige() {
+		player[this.layer].unlocked = true;
+		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
 	resource: 'egg points', // Name of prestige currency
 	baseResource: 'points', // Name of resource prestige is based on
@@ -24,9 +29,10 @@ addLayer('e', {
 	exponent() { return 0.5 },
 	row: 0, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return true; },
+	branches: ['c'],
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
-		if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
+		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22))
 		return mult;
 	},
 	gainExp() { // Calculate the exponent on main currency from bonuses
@@ -80,10 +86,10 @@ addLayer('e', {
 		},
 		22: {
 			title: 'Point Softening',
-			description: 'Gain more points based on egg points',
+			description: 'Gain more egg points based on points',
 			cost: new Decimal(50),
 			unlocked() {
-				return hasUpgrade('e', 13);
+				return hasUpgrade('e', 21);
 			},
 			effect() {
 				return player.points.add(1).pow(0.15);
@@ -94,11 +100,68 @@ addLayer('e', {
 	achievements: {
 		11: {
 			name: 'Starting out',
-			tooltip: 'Get 10 egg points',
+			tooltip() {
+				return `Get 10 egg points\nCurrently: ${player[this.layer].points}`;
+			},
 			image: 'https://media.discordapp.net/attachments/478214127945383936/860595705672630282/starting_out_tet.png',
 			done() {
 				return player.e.points.gte(10);
 			},
 		},
+		12: {
+			name: 'Yolkmaker',
+			tooltip() { 
+				return `Reset egg layer 50 times\nCurrently: ${player[this.layer].resets}`;
+			},
+			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
+			done() {
+				return player.e.resets.gte(50);
+			},
+		},
 	}
+});
+
+
+
+
+// =======
+// LAYER 2
+// =======
+
+// CREATORS
+
+addLayer('c', {
+	name: 'Creators', // This is optional, only used in a few places, If absent it just uses the layer id.
+	symbol: 'C', // This appears on the layer's node. Default is the id with the first letter capitalized
+	position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+	startData() { return {
+		unlocked: false,
+		points: new Decimal(0),
+		resets: new Decimal(0),
+	} },
+	color: '#21B051',
+	requires() { // Can be a function that takes requirement increases into account // its now
+		cost = new Decimal(100);
+		return cost;
+	},
+	onPrestige() {
+		player[this.layer].resets = player[this.layer].resets.add(1);
+	},
+	resource: 'creators', // Name of prestige currency
+	baseResource: 'egg points', // Name of resource prestige is based on
+	baseAmount() { return player.e.points }, // Get the current amount of baseResource
+	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
+	exponent() { return 0.5 },
+	row: 1, // Row the layer is in on the tree (0 is the first row)
+	layerShown() { return player.e.unlocked; },
+	gainMult() { // Calculate the multiplier for main currency from bonuses
+		mult = new Decimal(1);
+		return mult;
+	},
+	gainExp() { // Calculate the exponent on main currency from bonuses
+		return new Decimal(1);
+	},
+	hotkeys: [
+		{ key: 'c', description: 'C: Reset for creators', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } /* Determines if you can use the hotkey, optional */ },
+	],
 });

@@ -4,6 +4,7 @@ let modInfo = {
 	author: "nirmoll",
 	pointsName: "points",
 	modFiles: ["layers.js", "tree.js"],
+	testMode: true,
 
 	discordName: "",
 	discordLink: "",
@@ -41,6 +42,7 @@ function getPointGen() {
 	if (!canGenPoints()) return new Decimal(0);
 
 	let gain = new Decimal(1);
+	if (modInfo.testMode) gain = gain.times(20)
 	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)) // Egg Power
 	if (hasUpgrade('e', 13)) gain = gain.times(3)                      // Double Generators
 	if (hasUpgrade('e', 21)) gain = gain.times(upgradeEffect('e', 21)) // Self-Synergy
