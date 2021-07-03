@@ -26,6 +26,7 @@ addLayer('e', {
 	layerShown() { return true; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
+		if (hasUpgrade('p', 13)) mult = mult.times(upgradeEffect('p', 13))
 		return mult;
 	},
 	gainExp() { // Calculate the exponent on main currency from bonuses
@@ -58,12 +59,36 @@ addLayer('e', {
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
 		13: {
-			title: 'Double Generators',
-			description: 'Get 2x more points per second',
+			title: 'Triple Generators',
+			description: 'Get 3x more points per second',
 			cost: new Decimal(10),
 			unlocked() {
 				return hasUpgrade('e', 11);
 			},
+		},
+		21: {
+			title: 'Self-Synergy',
+			description: 'Gain more points based on points',
+			cost: new Decimal(15),
+			unlocked() {
+				return hasUpgrade('e', 13);
+			},
+			effect() {
+				return player.points.add(1).pow(0.25);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+		22: {
+			title: 'Point Softening',
+			description: 'Gain more points based on egg points',
+			cost: new Decimal(50),
+			unlocked() {
+				return hasUpgrade('e', 13);
+			},
+			effect() {
+				return player.points.add(1).pow(0.15);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
 	},
 	achievements: {

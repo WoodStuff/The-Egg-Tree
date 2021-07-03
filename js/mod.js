@@ -42,7 +42,8 @@ function getPointGen() {
 
 	let gain = new Decimal(1);
 	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)) // Egg Power
-	if (hasUpgrade('e', 13)) gain = gain.times(2)                      // Double Generators
+	if (hasUpgrade('e', 13)) gain = gain.times(3)                      // Double Generators
+	if (hasUpgrade('e', 21)) gain = gain.times(upgradeEffect('e', 21)) // Self-Synergy
 
 	return gain;
 }
