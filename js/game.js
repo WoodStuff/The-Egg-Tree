@@ -158,7 +158,7 @@ function layerDataReset(layer, keep = []) {
 	layOver(player[layer], getStartLayerData(layer))
 	player[layer].upgrades = []
 	player[layer].milestones = []
-	player[layer].achievements = []
+	//player[layer].achievements = []
 
 	for (thing in storedData) {
 		player[layer][thing] =storedData[thing]
