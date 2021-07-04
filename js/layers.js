@@ -89,10 +89,22 @@ addLayer('e', {
 			description: 'Gain more egg points based on points',
 			cost: new Decimal(50),
 			unlocked() {
-				return hasUpgrade('e', 21);
+				return hasUpgrade('e', 12) && hasUpgrade('e', 21);
 			},
 			effect() {
 				return player.points.add(1).pow(0.15);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+		23: {
+			title: 'Secondary Power',
+			description: 'Gain more points based amount of upgrades from all layers bought',
+			cost: new Decimal(50),
+			unlocked() {
+				return hasUpgrade('e', 22);
+			},
+			effect() {
+				return Math.pow(getUps(), 0.5);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
@@ -128,6 +140,16 @@ addLayer('e', {
 				return player.m.unlocked/* || player.c.unlocked*/;
 			},
 		},
+		14: {
+			name: 'Optimized',
+			tooltip() {
+				return `Get the first 6 egg upgrades`;
+			},
+			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
+			done() {
+				return hasUpgrade('e', 23);
+			},
+		},
 	}
 });
 
@@ -149,7 +171,7 @@ addLayer('m', {
 		points: new Decimal(0),
 		resets: new Decimal(0),
 	} },
-	color: '#204B96',
+	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now
 		cost = new Decimal(100);
 		return cost;
