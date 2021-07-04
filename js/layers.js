@@ -125,7 +125,7 @@ addLayer('e', {
 			},
 			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
 			done() {
-				return player.m.unlocked || player.c.unlocked;
+				return player.m.unlocked/* || player.c.unlocked*/;
 			},
 		},
 	}
@@ -141,7 +141,7 @@ addLayer('e', {
 // MULTIPLIERS
 
 addLayer('m', {
-	name: 'Creators', // This is optional, only used in a few places, If absent it just uses the layer id.
+	name: 'Multipliers', // This is optional, only used in a few places, If absent it just uses the layer id.
 	symbol: 'M', // This appears on the layer's node. Default is the id with the first letter capitalized
 	position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
 	startData() { return {
