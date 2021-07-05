@@ -14,13 +14,13 @@ You can make almost any value dynamic by using a function in its place, includin
 
 Standard values:
     
-- Required:
+    - Required:
 
         - unlocked: a bool determining if this layer is unlocked or not
 
         - points: a Decimal, the main currency for the layer
 
-- Optional:
+    - Optional:
 
         - total: A Decimal, tracks total amount of main prestige currency. Always tracked, but only shown if you add it here.
 
