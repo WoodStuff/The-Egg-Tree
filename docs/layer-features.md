@@ -13,13 +13,21 @@ You can make almost any value dynamic by using a function in its place, includin
 - startData(): A function to return the default save data for this layer. Add any variables you have to it. Make sure to use `Decimal` values rather than normal numbers.
 
     Standard values:
+    
         - Required:
+
             - unlocked: a bool determining if this layer is unlocked or not
+
             - points: a Decimal, the main currency for the layer
+
         - Optional:
+
             - total: A Decimal, tracks total amount of main prestige currency. Always tracked, but only shown if you add it here.
+
             - best: A Decimal, tracks highest amount of main prestige currency. Always tracked, but only shown if you add it here.
+
             - unlockOrder: used to keep track of relevant layers unlocked before this one.
+
             - resetTime: A number, time since this layer was last prestiged (or reset by another layer)
 
 - color: A color associated with this layer, used in many places. (A string in hex format with a #)
