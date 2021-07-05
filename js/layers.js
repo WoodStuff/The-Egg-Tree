@@ -141,7 +141,7 @@ addLayer('e', {
 			},
 		},
 		14: {
-			name: 'Optimized',
+			name: 'Optimize',
 			tooltip() {
 				return `Get the first 6 egg upgrades`;
 			},
