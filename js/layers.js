@@ -12,6 +12,9 @@ addLayer('e', {
 		unlocked: false,
 		points: new Decimal(0),
 		resets: new Decimal(0),
+		achs: {
+			14: false,
+		},
 	} },
 	color: '#F2AD18',
 	requires() { // Can be a function that takes requirement increases into account // its now
@@ -32,7 +35,9 @@ addLayer('e', {
 	branches: ['m', 'c'],
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
-		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22))
+		if (player.m.unlocked) mult = mult.times(layers.m.effect()); // Multiplier Bonus
+
+		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22)); // Point Softening
 		return mult;
 	},
 	gainExp() { // Calculate the exponent on main currency from bonuses
@@ -99,7 +104,7 @@ addLayer('e', {
 		23: {
 			title: 'Secondary Power',
 			description: 'Gain more points based amount of upgrades from all layers bought',
-			cost: new Decimal(50),
+			cost: new Decimal(500),
 			unlocked() {
 				return hasUpgrade('e', 22);
 			},
@@ -107,6 +112,9 @@ addLayer('e', {
 				return Math.pow(getUps(), 0.5);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+			onPurchase() {
+				player[this.layer].achs[14] = true;
+			}
 		},
 	},
 	achievements: {
@@ -135,9 +143,9 @@ addLayer('e', {
 			tooltip() {
 				return `Unlock a new layer`;
 			},
-			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
+			image: 'https://media.discordapp.net/attachments/478214127945383936/861583068564291614/a_new_dimension_tet.png',
 			done() {
-				return player.m.unlocked/* || player.c.unlocked*/;
+				return player.m.unlocked || player.c.unlocked;
 			},
 		},
 		14: {
@@ -147,7 +155,7 @@ addLayer('e', {
 			},
 			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
 			done() {
-				return hasUpgrade('e', 23);
+				return player.e.achs[14];
 			},
 		},
 	}
@@ -171,6 +179,12 @@ addLayer('m', {
 		points: new Decimal(0),
 		resets: new Decimal(0),
 	} },
+	effect() {
+		return player.m.points.add(1).pow(1/2);
+	},
+	effectDescription() {
+		return `which are multiplying the egg point gain by ${this.effect()}x`;
+	},
 	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now
 		cost = new Decimal(100);
@@ -194,17 +208,20 @@ addLayer('m', {
 		return new Decimal(1);
 	},
 	hotkeys: [
-		{ key: 'm', description: 'N: Reset for multipliers', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
+		{ key: 'm', description: 'M: Reset for multipliers', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
 	],
+	milestones: {
+
+	}
 });
 
 
-// CREATORS
+// CHICKENS
 
-/*addLayer('c', {
-	name: 'Creators', // This is optional, only used in a few places, If absent it just uses the layer id.
+addLayer('c', {
+	name: 'Chickens', // This is optional, only used in a few places, If absent it just uses the layer id.
 	symbol: 'C', // This appears on the layer's node. Default is the id with the first letter capitalized
-	position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
+	position: 1, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
 	startData() { return {
 		unlocked: false,
 		points: new Decimal(0),
@@ -218,11 +235,18 @@ addLayer('m', {
 	onPrestige() {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
-	resource: 'creators', // Name of prestige currency
+	effect() {
+		return player.m.points.add(1);
+	},
+	effectDescription() {
+		return `which are laying ${this.effect()} egg points per second`;
+	},
+	resource: 'chickens', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-	exponent() { return 0.5 },
+	exponent() { return 0.75 },
+	base() { return 1.90 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -233,6 +257,6 @@ addLayer('m', {
 		return new Decimal(1);
 	},
 	hotkeys: [
-		{ key: 'c', description: 'C: Reset for creators', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
+		{ key: 'c', description: 'C: Reset for chickens', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
 	],
-});*/
+});
