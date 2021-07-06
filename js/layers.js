@@ -35,7 +35,6 @@ addLayer('e', {
 	branches: ['m', 'c'],
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
-		if (player.m.unlocked) mult = mult.times(layers.m.effect()); // Multiplier Bonus
 
 		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22)); // Point Softening
 		return mult;
@@ -183,7 +182,7 @@ addLayer('m', {
 		return player.m.points.add(1).pow(1/2);
 	},
 	effectDescription() {
-		return `which are multiplying the egg point gain by ${this.effect()}x`;
+		return `which are multiplying the point gain by ${this.effect()}x`;
 	},
 	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now
@@ -236,7 +235,8 @@ addLayer('c', {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
 	effect() {
-		return player.m.points.add(1);
+		lay = player.c.points;
+		return lay;
 	},
 	effectDescription() {
 		return `which are laying ${this.effect()} egg points per second`;

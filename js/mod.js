@@ -43,10 +43,12 @@ function getPointGen() {
 
 	let gain = new Decimal(1);
 	if (modInfo.testMode) gain = gain.times(50)
+	if (player.m.unlocked) mult = mult.times(layers.m.effect()); // Multiplier Bonus
+
 	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)) // Egg Power
 	if (hasUpgrade('e', 13)) gain = gain.times(3)                      // Double Generators
 	if (hasUpgrade('e', 21)) gain = gain.times(upgradeEffect('e', 21)) // Self-Synergy
-	if (hasUpgrade('e', 23)) gain = gain.times(upgradeEffect('e', 23)) // Self-Synergy
+	if (hasUpgrade('e', 23)) gain = gain.times(upgradeEffect('e', 23)) // Secondary Power
 
 	return gain;
 }
@@ -62,6 +64,11 @@ var displayThings = [
 // Determines when the game "ends"
 function isEndgame() {
 	return player.points.gte(new Decimal("e280000000"));
+}
+
+// Do stuff every game tick
+function doGameTick() {
+
 }
 
 
