@@ -43,7 +43,7 @@ function getPointGen() {
 
 	let gain = new Decimal(1);
 	if (modInfo.testMode) gain = gain.times(50)
-	if (player.m.unlocked) mult = mult.times(layers.m.effect()); // Multiplier Bonus
+	if (player.m.unlocked) gain = gain.times(layers.m.effect()); // Multiplier Bonus
 
 	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)) // Egg Power
 	if (hasUpgrade('e', 13)) gain = gain.times(3)                      // Double Generators

@@ -25,6 +25,11 @@ addLayer('e', {
 		player[this.layer].unlocked = true;
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
+	doReset(reset) {
+		keep = [];
+		if (hasMilestone('m', 0) && reset == 'm') keep.push('upgrades');
+		if (layers[reset].row > this.row) layerDataReset('e', keep);
+	},
 	resource: 'egg points', // Name of prestige currency
 	baseResource: 'points', // Name of resource prestige is based on
 	baseAmount() { return player.points }, // Get the current amount of baseResource
@@ -182,7 +187,7 @@ addLayer('m', {
 		return player.m.points.add(1).pow(1/2);
 	},
 	effectDescription() {
-		return `which are multiplying the point gain by ${this.effect()}x`;
+		return `which are multiplying point gain by ${this.effect()}x`;
 	},
 	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now
@@ -196,7 +201,8 @@ addLayer('m', {
 	baseResource: 'egg points', // Name of resource prestige is based on
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-	exponent() { return 0.5 },
+	exponent() { return 1.1 },
+	base() { return 5 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -210,7 +216,11 @@ addLayer('m', {
 		{ key: 'm', description: 'M: Reset for multipliers', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
 	],
 	milestones: {
-
+		0: {
+			requirementDescription: '3 multipliers',
+			effectDescription: 'Keep egg upgrades on multiplier reset',
+			done() { return player.m.points.gte(3) }
+		}
 	}
 });
 
