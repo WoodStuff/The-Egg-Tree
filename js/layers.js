@@ -157,7 +157,7 @@ addLayer('e', {
 			tooltip() {
 				return `Get the first 6 egg upgrades`;
 			},
-			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
+			image: 'https://cdn.discordapp.com/attachments/478214127945383936/862785941964849203/optimize_tet.png',
 			done() {
 				return player.e.achs[14];
 			},
