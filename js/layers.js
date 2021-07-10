@@ -128,7 +128,7 @@ addLayer('e', {
 				return hasUpgrade('e', 22);
 			},
 			effect() {
-				return Math.pow(getUps(), 0.5);
+				return Math.pow(getUps(), 0.75);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 			onPurchase() {
@@ -273,8 +273,8 @@ addLayer('c', {
 	baseResource: 'egg points', // Name of resource prestige is based on
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-	exponent() { return 0.75 },
-	base() { return 1.90 },
+	exponent() { return 1.1 },
+	base() { return 5 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
