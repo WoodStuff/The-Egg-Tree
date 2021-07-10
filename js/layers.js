@@ -28,6 +28,7 @@ addLayer('e', {
 	doReset(reset) {
 		keep = [];
 		if (hasMilestone('m', 0) && reset == 'm') keep.push('upgrades');
+		if (hasMilestone('c', 0) && reset == 'c') keep.push('upgrades');
 		if (layers[reset].row > this.row) layerDataReset('e', keep);
 	},
 	resource: 'egg points', // Name of prestige currency
@@ -40,6 +41,7 @@ addLayer('e', {
 	branches: ['m', 'c'],
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
+		if (player.c.unlocked) mult = mult.times(layers.c.effect()); // Multiplier Bonus
 
 		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22)); // Point Softening
 		return mult;
@@ -162,7 +164,7 @@ addLayer('e', {
 				return player.e.achs[14];
 			},
 		},
-	}
+	},
 });
 
 
@@ -184,7 +186,8 @@ addLayer('m', {
 		resets: new Decimal(0),
 	} },
 	effect() {
-		return player.m.points.add(1).pow(1/2);
+		mult = player.m.points.add(1).pow(1/2);
+		return mult;
 	},
 	effectDescription() {
 		return `which are multiplying point gain by ${this.effect()}x`;
@@ -245,7 +248,7 @@ addLayer('c', {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
 	effect() {
-		lay = player.c.points;
+		lay = player.c.points.add(1).pow(1/2);
 		return lay;
 	},
 	effectDescription() {
@@ -269,4 +272,11 @@ addLayer('c', {
 	hotkeys: [
 		{ key: 'c', description: 'C: Reset for chickens', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
 	],
+	milestones: {
+		0: {
+			requirementDescription: '3 chickens',
+			effectDescription: 'Keep egg upgrades on chicken reset',
+			done() { return player.c.points.gte(3) }
+		}
+	}
 });
