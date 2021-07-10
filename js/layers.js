@@ -1,3 +1,15 @@
+function defaultTab(layer) {
+	return [
+		'main-display',
+		'prestige-button',
+		['display-text', function() { return `Your best ${layers[layer].resource} is ${formatWhole(player[layer].best)}` } ],
+		['display-text', function() { return `You have made a total of ${formatWhole(player[layer].total)} ${layers[layer].resource}`} ],
+		'blank',
+		'milestones',
+		'upgrades',
+		'achievements',
+	]
+}
 // =======
 // LAYER 1
 // =======
@@ -31,6 +43,7 @@ addLayer('e', {
 		if (hasMilestone('c', 0) && reset == 'c') keep.push('upgrades');
 		if (layers[reset].row > this.row) layerDataReset('e', keep);
 	},
+	tabFormat: defaultTab('e'),
 	resource: 'egg points', // Name of prestige currency
 	baseResource: 'points', // Name of resource prestige is based on
 	baseAmount() { return player.points }, // Get the current amount of baseResource
@@ -200,6 +213,7 @@ addLayer('m', {
 	onPrestige() {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
+	tabFormat: defaultTab('m'),
 	resource: 'multipliers', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
@@ -247,6 +261,7 @@ addLayer('c', {
 	onPrestige() {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
+	tabFormat: defaultTab('c'),
 	effect() {
 		lay = player.c.points.add(1).pow(1/2);
 		return lay;

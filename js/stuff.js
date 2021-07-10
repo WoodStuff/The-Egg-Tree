@@ -9,3 +9,16 @@ function getUps() {
 function getAchs() {
 	return Object.keys(layers).map(layer => player[layer].achievements.length).reduce((a,b) => a+b, 0)
 }
+
+// the default tab format
+function defaultTab(layer) {
+	return [
+		'main-display',
+		'prestige-button',
+		['display-text', function() { return `Your best  is ${format(player[layer.layer].best)}` } ],
+		['display-text', function() { return `You have made a total of ${format(player[layer.layer].total)} multipliers`} ],
+		'milestones',
+		'upgrades',
+		'achievements',
+	]
+}
