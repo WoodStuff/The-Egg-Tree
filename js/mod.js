@@ -1,21 +1,21 @@
 let modInfo = {
-	name: "The Egg Tree",
-	id: "eggtree",
-	author: "nirmoll",
-	pointsName: "points",
-	modFiles: ["layers.js", "tree.js", "stuff.js"],
+	name: 'The Egg Tree',
+	id: 'eggtree',
+	author: 'nirmoll',
+	pointsName: 'points',
+	modFiles: ['layers.js', 'tree.js', 'stuff.js'],
 	testMode: false,
 
-	discordName: "",
-	discordLink: "",
+	discordName: '',
+	discordLink: '',
 	initialStartPoints: new Decimal(5), // Used for hard resets and new players
 	offlineLimit: 0,  // In hours
 };
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0",
-	name: "Literally nothing",
+	num: '0.0',
+	name: 'Literally nothing',
 };
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -26,7 +26,7 @@ let winText = `Congratulations! You have reached the end and beaten this game, b
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything"];
+var doNotCallTheseFunctionsEveryTick = ['blowUpEverything'];
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints);
@@ -54,7 +54,7 @@ function getPointGen() {
 	return gain;
 }
 
-// You can add non-layer related variables that should to into "player" and be saved here, along with default values
+// You can add non-layer related variables that should to into 'player' and be saved here, along with default values
 function addedPlayerData() { return {
 }}
 
@@ -62,7 +62,7 @@ function addedPlayerData() { return {
 var displayThings = [
 ]
 
-// Determines when the game "ends"
+// Determines when the game 'ends'
 function isEndgame() {
 	return player.points.gte(new Decimal(1000000));
 }
