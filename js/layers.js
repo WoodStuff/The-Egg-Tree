@@ -55,6 +55,7 @@ addLayer('e', {
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
 		if (player.c.unlocked) mult = mult.times(layers.c.effect()); // Multiplier Bonus
+		if (hasUpgrade('m', 11)) mult = mult.times(upgradeEffect('m', 11)); // Egg Motivation
 
 		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22)); // Point Softening
 		return mult;
@@ -238,7 +239,21 @@ addLayer('m', {
 			effectDescription: 'Keep egg upgrades on multiplier reset',
 			done() { return player.m.points.gte(3) }
 		}
-	}
+	},
+	upgrades: {
+		11: {
+			title: 'Egg Motivation',
+			description: 'Best multipliers boost egg point production at a reduced rate',
+			cost: new Decimal(2),
+			unlocked() {
+				return player[this.layer].unlocked;
+			},
+			effect() {
+				return player[this.layer].best.add(1).pow(0.15);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+	},
 });
 
 
@@ -293,5 +308,19 @@ addLayer('c', {
 			effectDescription: 'Keep egg upgrades on chicken reset',
 			done() { return player.c.points.gte(3) }
 		}
-	}
+	},
+	upgrades: {
+		11: {
+			title: 'Extra Points',
+			description: 'Best chickens boost point production at a reduced rate',
+			cost: new Decimal(2),
+			unlocked() {
+				return player[this.layer].unlocked;
+			},
+			effect() {
+				return player[this.layer].best.add(1).pow(0.15);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+	},
 });
