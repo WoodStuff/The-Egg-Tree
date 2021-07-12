@@ -31,6 +31,7 @@ addLayer('e', {
 	color: '#F2AD18',
 	requires() { // Can be a function that takes requirement increases into account // its now
 		cost = new Decimal(5);
+		if (hasUpgrade('c', 12)) cost = new Decimal(2);
 		return cost;
 	},
 	onPrestige() {
@@ -321,6 +322,14 @@ addLayer('c', {
 				return player[this.layer].best.add(1).pow(0.15);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+		12: {
+			title: 'SonicLayTM Seeds',
+			description: 'Egg points\' cost is multiplied by 0.4x',
+			cost: new Decimal(4),
+			unlocked() {
+				return player[this.layer].unlocked;
+			},
 		},
 	},
 });
