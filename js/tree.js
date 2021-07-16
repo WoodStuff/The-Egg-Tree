@@ -1,7 +1,7 @@
 var layoutInfo = {
-    startTab: "b",
+    startTab: "none",
     startNavTab: "tree-tab",
-	showTree: false,
+	showTree: true,
 
     treeLayout: ""
 
