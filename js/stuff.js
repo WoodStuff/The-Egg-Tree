@@ -15,8 +15,7 @@ function defaultTab(layer) {
 	return [
 		'main-display',
 		'prestige-button',
-		['display-text', function() { return `Your best  is ${format(player[layer.layer].best)}` } ],
-		['display-text', function() { return `You have made a total of ${format(player[layer.layer].total)} multipliers`} ],
+		'resource-display',
 		'milestones',
 		'upgrades',
 		'achievements',

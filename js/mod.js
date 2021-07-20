@@ -3,7 +3,7 @@ let modInfo = {
 	id: 'eggtree',
 	author: 'nirmoll',
 	pointsName: 'points',
-	modFiles: ['layers.js', 'tree.js', 'stuff.js'],
+	modFiles: ['tree.js', 'stuff.js', 'layers/e.js', 'layers/m.js', 'layers/c.js'],
 	testMode: false,
 
 	discordName: '',
@@ -33,7 +33,7 @@ function getStartPoints(){
 }
 
 // Determines if it should show points/sec
-function canGenPoints(){
+function canGenPoints() {
 	return hasUpgrade('e', 11);
 }
 
