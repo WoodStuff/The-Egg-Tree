@@ -8,7 +8,7 @@ addLayer('m', {
 		resets: new Decimal(0),
 	} },
 	effect() {
-		mult = player.m.points.add(1).pow(1/2);
+		mult = player.m.points.add(1);
 		return mult;
 	},
 	effectDescription() {

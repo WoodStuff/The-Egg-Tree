@@ -17,7 +17,7 @@ addLayer('c', {
 	},
 	tabFormat: defaultTab('c'),
 	effect() {
-		lay = player.c.points.add(1).pow(1/2);
+		lay = player.c.points.add(1).pow(0.65);
 		return lay;
 	},
 	effectDescription() {
