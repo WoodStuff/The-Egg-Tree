@@ -44,7 +44,7 @@ function getPointGen() {
 	let gain = new Decimal(1);
 	if (modInfo.testMode) gain = gain.times(50)
 	if (player.m.unlocked) gain = gain.times(layers.m.effect()); // Multiplier Bonus
-	if (hasUpgrade('c', 11)) mult = mult.times(upgradeEffect('c', 11)); // Extra Points
+	if (hasUpgrade('c', 11)) gain = gain.times(upgradeEffect('c', 11)); // Extra Points
 
 	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)) // Egg Power
 	if (hasUpgrade('e', 13)) gain = gain.times(3)                      // Double Generators
@@ -60,11 +60,12 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
+	`Reach <b>e9</b> points to win!`
 ]
 
 // Determines when the game 'ends'
 function isEndgame() {
-	return player.points.gte(new Decimal(1000000));
+	return player.points.gte(new Decimal('e9'));
 }
 
 // Do stuff every game tick
