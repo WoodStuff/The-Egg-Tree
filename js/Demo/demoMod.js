@@ -64,6 +64,11 @@ function isEndgame() {
 	return player.points.gte(new Decimal("11"))
 }
 
+// Do stuff every game tick
+function doGameTick() {
+
+}
+
 
 
 // Less important things beyond this point!
