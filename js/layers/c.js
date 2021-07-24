@@ -21,7 +21,7 @@ addLayer('c', {
 		return lay;
 	},
 	effectDescription() {
-		return `which are multiplying egg point gain by ${this.effect()}x`;
+		return `which are multiplying egg point gain by ${format(this.effect())}x`;
 	},
 	resource: 'chickens', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on

@@ -1,15 +1,3 @@
-function defaultTab(layer) {
-	return [
-		'main-display',
-		'prestige-button',
-		['display-text', function() { return `Your best ${layers[layer].resource} is ${formatWhole(player[layer].best)}` } ],
-		['display-text', function() { return `You have made a total of ${formatWhole(player[layer].total)} ${layers[layer].resource}`} ],
-		'blank',
-		'milestones',
-		'upgrades',
-		'achievements',
-	]
-}
 // =======
 // LAYER 1
 // =======
@@ -67,6 +55,9 @@ addLayer('e', {
 	hotkeys: [
 		{ key: 'ctrl+s', description: 'Ctrl+S: Save the game', unlocked: true, onPress() {
 			save(true);
+		} },
+		{ key: '-', description: '-: Toggle info mode', unlocked: true, onPress() {
+			player.info = !player.info;
 		} },
 		{ key: 'e', description: 'E: Reset for egg points', onPress() {
 			if (canReset(this.layer)) doReset(this.layer);

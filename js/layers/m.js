@@ -12,7 +12,7 @@ addLayer('m', {
 		return mult;
 	},
 	effectDescription() {
-		return `which are multiplying point gain by ${this.effect()}x`;
+		return `which are multiplying point gain by ${format(this.effect())}x`;
 	},
 	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now

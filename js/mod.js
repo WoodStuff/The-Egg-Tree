@@ -30,12 +30,12 @@ var doNotCallTheseFunctionsEveryTick = ['blowUpEverything'];
 
 function getStartPoints(){
     return new Decimal(modInfo.initialStartPoints);
-}
+};
 
 // Determines if it should show points/sec
 function canGenPoints() {
 	return hasUpgrade('e', 11);
-}
+};
 
 // Calculate points/sec!
 function getPointGen() {
@@ -52,26 +52,27 @@ function getPointGen() {
 	if (hasUpgrade('e', 23)) gain = gain.times(upgradeEffect('e', 23)) // Secondary Power
 
 	return gain;
-}
+};
 
 // You can add non-layer related variables that should to into 'player' and be saved here, along with default values
 function addedPlayerData() { return {
+	info: false,
 }}
 
 // Display extra things at the top of the page
 var displayThings = [
 	`Reach <b>e9</b> points to win!`
-]
+];
 
 // Determines when the game 'ends'
 function isEndgame() {
 	return player.points.gte(new Decimal('e9'));
-}
+};
 
 // Do stuff every game tick
 function doGameTick() {
 
-}
+};
 
 
 
