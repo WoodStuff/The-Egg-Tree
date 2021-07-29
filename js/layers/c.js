@@ -21,7 +21,7 @@ addLayer('c', {
 		return lay;
 	},
 	effectDescription() {
-		return `which are multiplying egg point gain by ${format(this.effect())}x`;
+		return `which are multiplying egg point gain by ${format(tmp[this.layer].effect)}x`;
 	},
 	resource: 'chickens', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
@@ -46,7 +46,12 @@ addLayer('c', {
 			requirementDescription: '3 chickens',
 			effectDescription: 'Keep egg upgrades on chicken reset',
 			done() { return player.c.points.gte(3) }
-		}
+		},
+		1: {
+			requirementDescription: '6 chickens',
+			effectDescription: 'Gain 100% of egg point gain per second',
+			done() { return player.c.points.gte(6) }
+		},
 	},
 	upgrades: {
 		11: {

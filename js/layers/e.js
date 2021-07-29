@@ -41,9 +41,10 @@ addLayer('e', {
 	row: 0, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return true; },
 	branches: ['m', 'c'],
+	passiveGeneration() { return hasMilestone('c', 1) ? 1 : 0; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
-		if (player.c.unlocked) mult = mult.times(layers.c.effect()); // Multiplier Bonus
+		if (player.c.unlocked) mult = mult.times(tmp.c.effect); // Multiplier Bonus
 		if (hasUpgrade('m', 11)) mult = mult.times(upgradeEffect('m', 11)); // Egg Motivation
 
 		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22)); // Point Softening
