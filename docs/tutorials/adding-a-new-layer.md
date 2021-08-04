@@ -17,3 +17,6 @@ branches: ["p"],
 ```
 
 Now the layers are connected!
+
+## Making it harder to Multiplier Reset
+You'll notice that it's very easy to prestige in the Multiplier layer. That's 
