@@ -7,13 +7,6 @@ addLayer('m', {
 		points: new Decimal(0),
 		resets: new Decimal(0),
 	} },
-	effect() {
-		mult = new Decimal(2).pow(player.m.points);
-		return mult;
-	},
-	effectDescription() {
-		return `which are multiplying point gain by ${format(tmp[this.layer].effect)}x`;
-	},
 	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now
 		cost = new Decimal(100);
@@ -27,8 +20,11 @@ addLayer('m', {
 	baseResource: 'egg points', // Name of resource prestige is based on
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-	exponent() { return 1.1 },
-	base() { return 5 },
+	exponent() {
+		exp = 1.2;
+		return exp;
+	},
+	base() { return 3 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -37,6 +33,17 @@ addLayer('m', {
 	},
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
+	},
+	effBase() {
+		base = new Decimal(2);
+		return base;
+	},
+	effect() {
+		mult = tmp.m.effBase.pow(player.m.points);
+		return mult;
+	},
+	effectDescription() {
+		return `which are multiplying point gain by ${format(tmp[this.layer].effect)}x`;
 	},
 	hotkeys: [
 		{ key: 'm', description: 'M: Reset for multipliers', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
@@ -53,9 +60,7 @@ addLayer('m', {
 			title: 'Egg Motivation',
 			description: 'Best multipliers boost egg point production at a reduced rate',
 			cost: new Decimal(2),
-			unlocked() {
-				return player[this.layer].unlocked;
-			},
+			unlocked: true,
 			effect() {
 				return player[this.layer].best.add(1).pow(0.15);
 			},

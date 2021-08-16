@@ -16,19 +16,15 @@ addLayer('c', {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
 	tabFormat: defaultTab('c'),
-	effect() {
-		lay = player.c.points.add(1).pow(0.65);
-		return lay;
-	},
-	effectDescription() {
-		return `which are multiplying egg point gain by ${format(tmp[this.layer].effect)}x`;
-	},
 	resource: 'chickens', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
-	exponent() { return 1.1 },
-	base() { return 5 },
+	exponent() {
+		exp = 1.2;
+		return exp;
+	},
+	base() { return 3 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -37,6 +33,13 @@ addLayer('c', {
 	},
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
+	},
+	effect() {
+		lay = player.c.points.add(1).pow(0.65);
+		return lay;
+	},
+	effectDescription() {
+		return `which are multiplying egg point gain by ${format(tmp[this.layer].effect)}x`;
 	},
 	hotkeys: [
 		{ key: 'c', description: 'C: Reset for chickens', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
@@ -58,9 +61,7 @@ addLayer('c', {
 			title: 'Extra Points',
 			description: 'Best chickens boost point production at a reduced rate',
 			cost: new Decimal(2),
-			unlocked() {
-				return player[this.layer].unlocked;
-			},
+			unlocked: true,
 			effect() {
 				return player[this.layer].best.add(1).pow(0.15);
 			},

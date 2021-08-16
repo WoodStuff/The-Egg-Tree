@@ -3,7 +3,7 @@ let modInfo = {
 	id: 'eggtree',
 	author: 'nirmoll',
 	pointsName: 'points',
-	modFiles: ['tree.js', 'stuff.js', 'layers/e.js', 'layers/m.js', 'layers/c.js'],
+	modFiles: ['tree.js', 'stuff.js', 'layers/misc/a.js', 'layers/e.js', 'layers/m.js', 'layers/c.js'],
 	testMode: false,
 
 	discordName: '',

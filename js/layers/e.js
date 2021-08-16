@@ -78,7 +78,7 @@ addLayer('e', {
 				return hasUpgrade('e', 11);
 			},
 			effect() {
-				return player[this.layer].points.add(1).pow(0.5);
+				return softcap(player.e.points.add(1).pow(0.5), new Decimal(25000), 0.5);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
@@ -117,7 +117,7 @@ addLayer('e', {
 		23: {
 			title: 'Secondary Power',
 			description: 'Gain more points based amount of upgrades from all layers bought',
-			cost: new Decimal(500),
+			cost: new Decimal(150),
 			unlocked() {
 				return hasUpgrade('e', 22);
 			},
@@ -128,48 +128,6 @@ addLayer('e', {
 			onPurchase() {
 				player[this.layer].achs[14] = true;
 			}
-		},
-	},
-	achievements: {
-		11: {
-			name: 'Starting out',
-			tooltip() {
-				return `Get 10 egg points\nCurrently: ${player[this.layer].points}`;
-			},
-			image: 'https://media.discordapp.net/attachments/478214127945383936/860595705672630282/starting_out_tet.png',
-			done() {
-				return player.e.points.gte(10);
-			},
-		},
-		12: {
-			name: 'Yolkmaker',
-			tooltip() { 
-				return `Reset egg layer 50 times\nCurrently: ${player[this.layer].resets}`;
-			},
-			image: 'https://cdn.discordapp.com/attachments/478214127945383936/860834255319728128/yolkmaker_tet.png',
-			done() {
-				return player.e.resets.gte(50);
-			},
-		},
-		13: {
-			name: 'A new dimension',
-			tooltip() {
-				return `Unlock a new layer`;
-			},
-			image: 'https://media.discordapp.net/attachments/478214127945383936/861583068564291614/a_new_dimension_tet.png',
-			done() {
-				return player.m.unlocked || player.c.unlocked;
-			},
-		},
-		14: {
-			name: 'Optimize',
-			tooltip() {
-				return `Get the first 6 egg upgrades`;
-			},
-			image: 'https://cdn.discordapp.com/attachments/478214127945383936/862785941964849203/optimize_tet.png',
-			done() {
-				return player.e.achs[14];
-			},
 		},
 	},
 });
