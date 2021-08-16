@@ -21,10 +21,10 @@ addLayer('m', {
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
 	exponent() {
-		exp = 1.2;
+		exp = 1.3;
 		return exp;
 	},
-	base() { return 3 },
+	base() { return 5 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -58,11 +58,21 @@ addLayer('m', {
 	upgrades: {
 		11: {
 			title: 'Egg Motivation',
-			description: 'Best multipliers boost egg point production at a reduced rate',
+			description: 'Total multipliers boost egg point production at a reduced rate',
 			cost: new Decimal(2),
 			unlocked: true,
 			effect() {
-				return player[this.layer].best.add(1).pow(0.15);
+				return player[this.layer].total.add(1).pow(0.35);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+		12: {
+			title: 'Egg Create',
+			description: 'Multipliers boost chicken effect',
+			cost: new Decimal(5),
+			unlocked: true,
+			effect() {
+				return player[this.layer].points.add(1).pow(0.15);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},

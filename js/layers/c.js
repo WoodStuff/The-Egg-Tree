@@ -21,10 +21,10 @@ addLayer('c', {
 	baseAmount() { return player.e.points }, // Get the current amount of baseResource
 	type: 'static', // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
 	exponent() {
-		exp = 1.2;
+		exp = 1.3;
 		return exp;
 	},
-	base() { return 3 },
+	base() { return 5 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
 	layerShown() { return player.e.unlocked; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
@@ -36,6 +36,7 @@ addLayer('c', {
 	},
 	effect() {
 		lay = player.c.points.add(1).pow(0.65);
+		if (hasUpgrade('m', 12)) lay = lay.times(upgradeEffect('m', 12));
 		return lay;
 	},
 	effectDescription() {
@@ -59,11 +60,11 @@ addLayer('c', {
 	upgrades: {
 		11: {
 			title: 'Extra Points',
-			description: 'Best chickens boost point production at a reduced rate',
+			description: 'Total chickens boost point production at a reduced rate',
 			cost: new Decimal(2),
 			unlocked: true,
 			effect() {
-				return player[this.layer].best.add(1).pow(0.15);
+				return player[this.layer].total.add(1).pow(0.35);
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
