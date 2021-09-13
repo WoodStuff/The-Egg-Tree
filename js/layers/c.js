@@ -17,6 +17,12 @@ addLayer('c', {
 	onPrestige() {
 		player[this.layer].resets = player[this.layer].resets.add(1);
 	},
+	doReset(reset) {
+		keep = [];
+		if (hasMilestone('b', 0) && reset == 'b') keep.push('milestones');
+		if (layers[reset].row > this.row) layerDataReset('c', keep);
+	},
+	canBuyMax() { return hasMilestone('b', 1) },
 	tabFormat: defaultTab('c'),
 	resource: 'chickens', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
@@ -36,6 +42,7 @@ addLayer('c', {
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
 	},
+	branches: ['b', 'd'],
 	effect() {
 		lay = player.c.points.add(1).pow(0.65);
 		if (hasUpgrade('m', 12)) lay = lay.times(upgradeEffect('m', 12));

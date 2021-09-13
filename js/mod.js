@@ -3,7 +3,11 @@ let modInfo = {
 	id: 'eggtree',
 	author: 'nirmoll',
 	pointsName: 'points',
-	modFiles: ['tree.js', 'stuff.js', 'layers/misc/a.js', 'layers/e.js', 'layers/m.js', 'layers/c.js'],
+	modFiles: ['tree.js', 'stuff.js',
+	'layers/misc/a.js',
+	'layers/e.js',
+	'layers/m.js', 'layers/c.js',
+	'layers/l.js', 'layers/b.js', 'layers/d.js'],
 	testMode: false,
 
 	discordName: '',
@@ -43,13 +47,16 @@ function getPointGen() {
 
 	let gain = new Decimal(1);
 	if (modInfo.testMode) gain = gain.times(50);
-	if (player.m.unlocked) gain = gain.times(tmp.m.effect); // Multiplier Bonus
+	if (player.m.unlocked) gain = gain.times(tmp.m.effect);             // Multiplier Bonus
 	if (hasUpgrade('c', 11)) gain = gain.times(upgradeEffect('c', 11)); // Extra Points
 
 	if (hasUpgrade('e', 12)) gain = gain.times(upgradeEffect('e', 12)); // Egg Power
 	if (hasUpgrade('e', 13)) gain = gain.times(3);                      // Double Generators
 	if (hasUpgrade('e', 21)) gain = gain.times(upgradeEffect('e', 21)); // Self-Synergy
 	if (hasUpgrade('e', 23)) gain = gain.times(upgradeEffect('e', 23)); // Secondary Power
+
+	if (player.b.unlocked) gain = gain.times(tmp.b.peffect);            // Bar Piece Bonus
+	if (hasMilestone('b', 0)) gain = gain.times(3);                     // Bar 1st milestone
 
 	return gain;
 };

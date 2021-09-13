@@ -2,12 +2,12 @@
 
 // get the total amount of upgrades
 function getUps() {
-	return Object.keys(layers).map(layer => player[layer].upgrades.length).reduce((a,b) => a+b, 0)
+	return Object.keys(layers).map(layer => player[layer].upgrades.length).reduce((a,b) => a+b, 0);
 }
 
 // get the total amount of achievements
 function getAchs() {
-	return Object.keys(layers).map(layer => player[layer].achievements.length).reduce((a,b) => a+b, 0)
+	return Object.keys(layers).map(layer => player[layer].achievements.length).reduce((a,b) => a+b, 0);
 }
 
 // the default tab format
@@ -19,5 +19,5 @@ function defaultTab(layer) {
 		'milestones',
 		'upgrades',
 		'achievements',
-	]
+	];
 }

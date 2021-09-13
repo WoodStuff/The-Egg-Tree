@@ -74,5 +74,15 @@ addLayer('a', {
 				return hasMilestone('m', 1);
 			},
 		},
+		22: {
+			name: 'Another Row',
+			tooltip() {
+				return `Unlock Bar points`;
+			},
+			image: 'https://media.discordapp.net/attachments/478214127945383936/861583068564291614/a_new_dimension_tet.png',
+			done() {
+				return player.b.unlocked;
+			},
+		},
 	},
 });

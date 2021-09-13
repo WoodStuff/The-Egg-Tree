@@ -144,11 +144,11 @@ addLayer('e', {
 			description: 'Number of achievements boosts egg point gain',
 			cost: new Decimal('2.5e10'),
 			unlocked() {
-				return hasMilestone('m', 1);
+				return hasMilestone('m', 1) && hasUpgrade('e', 23);
 			},
 			effect() {
 				eff = player.a.points.add(1).pow(0.65);
-				if (hasUpgrade('e', 33)) eff = eff.times(player.c.best.pow(0.2));
+				if (hasUpgrade('e', 33)) eff = eff.pow(2.1);
 				return eff;
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
@@ -162,19 +162,18 @@ addLayer('e', {
 			},
 			effect() {
 				eff = player.m.best.add(player.c.best).pow(0.6);
-				if (hasUpgrade('e', 33)) eff = eff.times(player.a.points.add(1).pow(0.45));
+				if (hasUpgrade('e', 33)) eff = eff.pow(2.1);
 				return eff;
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
 		33: {
 			title: 'Row Leader',
-			description: 'Best chickens boost Achievement Boost and achievements boost Multichicken',
-			cost: new Decimal('e12'),
+			description: 'Achievement Boost and Multichicken ^2.1',
+			cost: new Decimal('1.6e12'),
 			unlocked() {
 				return hasUpgrade('e', 32);
 			},
-			effectDisplay() { return `${format(player.a.points.add(1).pow(0.25))}x, ${format(player.c.best.pow(0.2))}x`; }, // Add formatting to the effect
 		},
 	},
 });
