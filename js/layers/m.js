@@ -92,6 +92,6 @@ addLayer('m', {
 				return player.e.points.add(30).log(10).add(1).log(20).add(1).log(50);
 			},
 			effectDisplay() { return `+${format(upgradeEffect(this.layer, this.id))}` },
-		}
+		},
 	},
 });

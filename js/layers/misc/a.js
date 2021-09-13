@@ -64,5 +64,15 @@ addLayer('a', {
 				return player.m.unlocked && player.c.unlocked;
 			},
 		},
+		21: {
+			name: 'More Upgrades!',
+			tooltip() {
+				return `Get the second Multiplier milestone`;
+			},
+			image: 'https://media.discordapp.net/attachments/478214127945383936/861583068564291614/a_new_dimension_tet.png',
+			done() {
+				return hasMilestone('m', 1);
+			},
+		},
 	},
 });

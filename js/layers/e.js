@@ -46,10 +46,13 @@ addLayer('e', {
 	passiveGeneration() { return hasMilestone('c', 1) ? 1 : 0; },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
+
 		if (player.c.unlocked) mult = mult.times(tmp.c.effect); // Multiplier Bonus
 		if (hasUpgrade('m', 11)) mult = mult.times(upgradeEffect('m', 11)); // Egg Motivation
 
 		if (hasUpgrade('e', 22)) mult = mult.times(upgradeEffect('e', 22)); // Point Softening
+		if (hasUpgrade('e', 31)) mult = mult.times(upgradeEffect('e', 31)); // Achievement Boost
+
 		return mult;
 	},
 	gainExp() { // Calculate the exponent on main currency from bonuses
@@ -80,7 +83,12 @@ addLayer('e', {
 				return hasUpgrade('e', 11);
 			},
 			effect() {
-				return softcap(player.e.points.add(1).pow(0.5), new Decimal(25000), 0.5);
+				eff = player.e.points.add(1).pow(0.5);
+
+				if (hasUpgrade('e', 32)) eff = eff.times(upgradeEffect('e', 32)); // Multichicken
+
+				eff = softcap(eff, new Decimal(25000), 0.5);
+				return eff;
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
 		},
@@ -132,16 +140,41 @@ addLayer('e', {
 			}
 		},
 		31: {
-			title: 'Self-Synergy',
-			description: 'Gain more points based on points',
-			cost: new Decimal(15),
+			title: 'Achievement Boost',
+			description: 'Number of achievements boosts egg point gain',
+			cost: new Decimal('2.5e10'),
 			unlocked() {
 				return hasMilestone('m', 1);
 			},
 			effect() {
-				return player.points.add(1).pow(0.25);
+				eff = player.a.points.add(1).pow(0.65);
+				if (hasUpgrade('e', 33)) eff = eff.times(player.c.best.pow(0.2));
+				return eff;
 			},
 			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+		32: {
+			title: 'Multichicken',
+			description: 'Best multipliers and chickens boost Egg Power (before the softcap)',
+			cost: new Decimal('e12'),
+			unlocked() {
+				return hasUpgrade('e', 31);
+			},
+			effect() {
+				eff = player.m.best.add(player.c.best).pow(0.6);
+				if (hasUpgrade('e', 33)) eff = eff.times(player.a.points.add(1).pow(0.45));
+				return eff;
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
+		33: {
+			title: 'Row Leader',
+			description: 'Best chickens boost Achievement Boost and achievements boost Multichicken',
+			cost: new Decimal('e12'),
+			unlocked() {
+				return hasUpgrade('e', 32);
+			},
+			effectDisplay() { return `${format(player.a.points.add(1).pow(0.25))}x, ${format(player.c.best.pow(0.2))}x`; }, // Add formatting to the effect
 		},
 	},
 });
