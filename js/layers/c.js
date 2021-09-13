@@ -62,7 +62,6 @@ addLayer('c', {
 			title: 'Extra Points',
 			description: 'Total chickens boost point production at a reduced rate',
 			cost: new Decimal(2),
-			unlocked: true,
 			effect() {
 				return player[this.layer].total.add(1).pow(0.35);
 			},

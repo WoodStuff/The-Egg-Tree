@@ -60,21 +60,20 @@ addLayer('m', {
 			title: 'Egg Motivation',
 			description: 'Total multipliers boost egg point production at a reduced rate',
 			cost: new Decimal(2),
-			unlocked: true,
 			effect() {
 				return player[this.layer].total.add(1).pow(0.35);
 			},
-			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; },
 		},
 		12: {
 			title: 'Egg Create',
 			description: 'Multipliers boost chicken effect',
 			cost: new Decimal(5),
-			unlocked: true,
+			unlocked() { return hasUpgrade('m', 11) },
 			effect() {
-				return player[this.layer].points.add(1).pow(0.15);
+				return player[this.layer].points.add(1).log(15).add(1);
 			},
-			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; },
 		},
 	},
 });
