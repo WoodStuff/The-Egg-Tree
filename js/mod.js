@@ -42,7 +42,7 @@ function getPointGen() {
 	if (!canGenPoints()) return new Decimal(0);
 
 	let gain = new Decimal(1);
-	if (modInfo.testMode) gain = gain.times(50)
+	if (modInfo.testMode) gain = gain.times(50);
 	if (player.m.unlocked) gain = gain.times(tmp.m.effect); // Multiplier Bonus
 	if (hasUpgrade('c', 11)) gain = gain.times(upgradeEffect('c', 11)); // Extra Points
 
