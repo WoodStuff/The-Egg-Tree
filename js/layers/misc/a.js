@@ -17,7 +17,7 @@ addLayer('a', {
 		11: {
 			name: 'Starting out',
 			tooltip() {
-				return `Get 10 egg points\nCurrently: ${player[this.layer].points}`;
+				return `Get 10 egg points\nCurrently: ${player.e.points}`;
 			},
 			image: 'https://media.discordapp.net/attachments/478214127945383936/860595705672630282/starting_out_tet.png',
 			done() {
