@@ -61,12 +61,12 @@ function addedPlayerData() { return {
 
 // Display extra things at the top of the page
 var displayThings = [
-	`Reach <b>e9</b> points to win!`
+	`Reach <b>e50</b> points to win!`
 ];
 
 // Determines when the game 'ends'
 function isEndgame() {
-	return player.points.gte(new Decimal('e9'));
+	return player.points.gte(new Decimal('e50'));
 };
 
 // Do stuff every game tick
