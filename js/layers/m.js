@@ -1,10 +1,12 @@
 addLayer('m', {
-	name: 'Multipliers', // This is optional, only used in a few places, If absent it just uses the layer id.
+	name: 'multiplier', // This is optional, only used in a few places, If absent it just uses the layer id.
 	symbol: 'M', // This appears on the layer's node. Default is the id with the first letter capitalized
 	position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
 	startData() { return {
 		unlocked: false,
 		points: new Decimal(0),
+		best: new Decimal(0),
+		total: new Decimal(0),
 		resets: new Decimal(0),
 	} },
 	color: '#495FBA',
@@ -26,7 +28,7 @@ addLayer('m', {
 	},
 	base() { return 5 },
 	row: 1, // Row the layer is in on the tree (0 is the first row)
-	layerShown() { return player.e.unlocked; },
+	layerShown() { return player.e.unlocked },
 	gainMult() { // Calculate the multiplier for main currency from bonuses
 		mult = new Decimal(1);
 		return mult;
@@ -36,6 +38,7 @@ addLayer('m', {
 	},
 	effBase() {
 		base = new Decimal(2);
+		if (hasUpgrade('m', 13)) base = base.add(upgradeEffect('m', 13));
 		return base;
 	},
 	effect() {
@@ -46,7 +49,7 @@ addLayer('m', {
 		return `which are multiplying point gain by ${format(tmp[this.layer].effect)}x`;
 	},
 	hotkeys: [
-		{ key: 'm', description: 'M: Reset for multipliers', onPress() { if (canReset(this.layer)) doReset(this.layer); }, unlocked() { return player[this.layer].unlocked; } },
+		{ key: 'm', description: 'M: Reset for multipliers', onPress() { if (canReset(this.layer)) doReset(this.layer) }, unlocked() { return player[this.layer].unlocked } },
 	],
 	milestones: {
 		0: {
@@ -63,7 +66,7 @@ addLayer('m', {
 			effect() {
 				return player[this.layer].total.add(1).pow(0.35);
 			},
-			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; },
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x' },
 		},
 		12: {
 			title: 'Egg Create',
@@ -73,7 +76,17 @@ addLayer('m', {
 			effect() {
 				return player[this.layer].points.add(1).log(15).add(1);
 			},
-			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; },
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x' },
 		},
+		13: {
+			title: 'Boost Multiply',
+			description: 'Egg points boost multiplier base',
+			cost: new Decimal(7),
+			unlocked() { return hasUpgrade('m', 12) },
+			effect() {
+				return player.e.points.add(30).log(10).add(1).log(20).add(1).log(50);
+			},
+			effectDisplay() { return `+${format(upgradeEffect(this.layer, this.id))}` },
+		}
 	},
 });
