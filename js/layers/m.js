@@ -56,7 +56,12 @@ addLayer('m', {
 			requirementDescription: '3 multipliers',
 			effectDescription: 'Keep egg upgrades on multiplier reset',
 			done() { return player.m.points.gte(3) }
-		}
+		},
+		1: {
+			requirementDescription: '8 multipliers',
+			effectDescription: 'Unlock 3 more egg upgrades',
+			done() { return player.m.points.gte(8) }
+		},
 	},
 	upgrades: {
 		11: {

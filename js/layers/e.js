@@ -131,5 +131,17 @@ addLayer('e', {
 				player[this.layer].achs[14] = true;
 			}
 		},
+		31: {
+			title: 'Self-Synergy',
+			description: 'Gain more points based on points',
+			cost: new Decimal(15),
+			unlocked() {
+				return hasMilestone('m', 1);
+			},
+			effect() {
+				return player.points.add(1).pow(0.25);
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+		},
 	},
 });
