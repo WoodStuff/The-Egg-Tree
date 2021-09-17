@@ -19,10 +19,9 @@ addLayer('c', {
 	},
 	doReset(reset) {
 		keep = [];
-		if (hasMilestone('b', 0) && reset == 'b') keep.push('milestones');
 		if (layers[reset].row > this.row) layerDataReset('c', keep);
 	},
-	canBuyMax() { return hasMilestone('b', 1) },
+	canBuyMax() { return false },
 	tabFormat: defaultTab('c'),
 	resource: 'chickens', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
@@ -42,7 +41,7 @@ addLayer('c', {
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
 	},
-	branches: ['b', 'd'],
+	branches: ['b'],
 	effect() {
 		lay = player.c.points.add(1).pow(0.65);
 		if (hasUpgrade('m', 12)) lay = lay.times(upgradeEffect('m', 12));
@@ -88,8 +87,8 @@ addLayer('c', {
 		13: {
 			title: 'Egg-Chicken Multing',
 			description: 'Egg points boost chicken effect',
-			cost: new Decimal(7),
-			unlocked() { return hasUpgrade('c', 12) && hasUpgrade('m', 13) },
+			cost: new Decimal(6),
+			unlocked() { return hasUpgrade('c', 12) },
 			effect() {
 				return player.e.points.add(30).log(10).add(1).log(25).add(1).log(75).div(1.25).add(1);
 			},

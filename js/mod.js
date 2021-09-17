@@ -6,8 +6,7 @@ let modInfo = {
 	modFiles: ['tree.js', 'stuff.js',
 	'layers/misc/a.js',
 	'layers/e.js',
-	'layers/m.js', 'layers/c.js',
-	'layers/l.js', 'layers/b.js', 'layers/d.js'],
+	'layers/m.js', 'layers/c.js',],
 	testMode: false,
 
 	discordName: '',
@@ -54,9 +53,6 @@ function getPointGen() {
 	if (hasUpgrade('e', 13)) gain = gain.times(3);                      // Double Generators
 	if (hasUpgrade('e', 21)) gain = gain.times(upgradeEffect('e', 21)); // Self-Synergy
 	if (hasUpgrade('e', 23)) gain = gain.times(upgradeEffect('e', 23)); // Secondary Power
-
-	if (player.b.unlocked) gain = gain.times(tmp.b.peffect);            // Bar Piece Bonus
-	if (hasMilestone('b', 0)) gain = gain.times(3);                     // Bar 1st milestone
 
 	return gain;
 };

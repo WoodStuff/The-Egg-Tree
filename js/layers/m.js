@@ -19,10 +19,9 @@ addLayer('m', {
 	},
 	doReset(reset) {
 		keep = [];
-		if (hasMilestone('b', 0) && reset == 'b') keep.push('milestones');
 		if (layers[reset].row > this.row) layerDataReset('m', keep);
 	},
-	canBuyMax() { return hasMilestone('b', 1) },
+	canBuyMax() { return false },
 	tabFormat: defaultTab('m'),
 	resource: 'multipliers', // Name of prestige currency
 	baseResource: 'egg points', // Name of resource prestige is based on
@@ -42,7 +41,7 @@ addLayer('m', {
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
 	},
-	branches: ['l', 'b'],
+	branches: ['b'],
 	effBase() {
 		base = new Decimal(2);
 		if (hasUpgrade('m', 13)) base = base.add(upgradeEffect('m', 13));
@@ -93,7 +92,7 @@ addLayer('m', {
 		13: {
 			title: 'Boost Multiply',
 			description: 'Egg points boost multiplier base',
-			cost: new Decimal(7),
+			cost: new Decimal(6),
 			unlocked() { return hasUpgrade('m', 12) },
 			effect() {
 				return player.e.points.add(30).log(10).add(1).log(20).add(1).log(50);
