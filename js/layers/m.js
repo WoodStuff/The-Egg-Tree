@@ -8,6 +8,9 @@ addLayer('m', {
 		best: new Decimal(0),
 		total: new Decimal(0),
 		resets: new Decimal(0),
+		achs: {
+			21: false,
+		},
 	} },
 	color: '#495FBA',
 	requires() { // Can be a function that takes requirement increases into account // its now
@@ -41,7 +44,6 @@ addLayer('m', {
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
 	},
-	branches: ['b'],
 	effBase() {
 		base = new Decimal(2);
 		if (hasUpgrade('m', 13)) base = base.add(upgradeEffect('m', 13));
@@ -63,17 +65,12 @@ addLayer('m', {
 			effectDescription: 'Keep egg upgrades on multiplier reset',
 			done() { return player.m.points.gte(3) }
 		},
-		1: {
-			requirementDescription: '8 multipliers',
-			effectDescription: 'Unlock 3 more egg upgrades',
-			done() { return player.m.points.gte(8) }
-		},
 	},
 	upgrades: {
 		11: {
 			title: 'Egg Motivation',
 			description: 'Total multipliers boost egg point production at a reduced rate',
-			cost: new Decimal(2),
+			cost: new Decimal(3),
 			effect() {
 				return player[this.layer].total.add(1).pow(0.35);
 			},
@@ -98,6 +95,30 @@ addLayer('m', {
 				return player.e.points.add(30).log(10).add(1).log(20).add(1).log(50);
 			},
 			effectDisplay() { return `+${format(upgradeEffect(this.layer, this.id))}` },
+		},
+		14: {
+			title: 'Achievement Boost',
+			description: 'Number of achievements boosts egg point gain',
+			cost: new Decimal(8),
+			unlocked() {
+				return hasUpgrade('m', 13);
+			},
+			effect() {
+				eff = player.a.points.add(1).pow(0.65);
+				return eff;
+			},
+			effectDisplay() { return format(upgradeEffect(this.layer, this.id)) + 'x'; }, // Add formatting to the effect
+			onPurchase() {
+				player[this.layer].achs[21] = true;
+			}
+		},
+		15: {
+			title: 'Additional Points',
+			description: 'Point and egg point gain ^1.1',
+			cost: new Decimal(9),
+			unlocked() {
+				return hasUpgrade('m', 14);
+			},
 		},
 	},
 });

@@ -41,7 +41,6 @@ addLayer('c', {
 	gainExp() { // Calculate the exponent on main currency from bonuses
 		return new Decimal(1);
 	},
-	branches: ['b'],
 	effect() {
 		lay = player.c.points.add(1).pow(0.65);
 		if (hasUpgrade('m', 12)) lay = lay.times(upgradeEffect('m', 12));
@@ -70,7 +69,7 @@ addLayer('c', {
 		11: {
 			title: 'Extra Points',
 			description: 'Total chickens boost point production at a reduced rate',
-			cost: new Decimal(2),
+			cost: new Decimal(3),
 			effect() {
 				return player[this.layer].total.add(1).pow(0.35);
 			},
@@ -93,6 +92,27 @@ addLayer('c', {
 				return player.e.points.add(30).log(10).add(1).log(25).add(1).log(75).div(1.25).add(1);
 			},
 			effectDisplay() { return `${format(upgradeEffect(this.layer, this.id))}x` },
-		}
+		},
+		14: {
+			title: 'Multichicken',
+			description: 'Best multipliers and chickens boost Egg Power (after the softcap)',
+			cost: new Decimal(8),
+			unlocked() {
+				return hasUpgrade('c', 13);
+			},
+			effect() {
+				eff = player.m.best.log(10).add(player.c.best.log(10)).pow(0.425);
+				return eff;
+			},
+			effectDisplay() { return `^${format(upgradeEffect(this.layer, this.id))}`; }, // Add formatting to the effect
+		},
+		15: {
+			title: 'HyperLayTM Seeds',
+			description: 'Instead of 100%, gain 1000% of egg point gain per second',
+			cost: new Decimal(11),
+			unlocked() {
+				return hasUpgrade('c', 14);
+			},
+		},
 	},
 });

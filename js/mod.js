@@ -54,6 +54,8 @@ function getPointGen() {
 	if (hasUpgrade('e', 21)) gain = gain.times(upgradeEffect('e', 21)); // Self-Synergy
 	if (hasUpgrade('e', 23)) gain = gain.times(upgradeEffect('e', 23)); // Secondary Power
 
+	if (hasUpgrade('m', 15)) gain = gain.pow(1.1);
+
 	return gain;
 };
 
